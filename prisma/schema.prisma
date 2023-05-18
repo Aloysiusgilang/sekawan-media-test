@@ -27,3 +27,71 @@ model Category {
     description String
     products    Product[]
 }
+
+model User {
+    id      Int      @id @default(autoincrement())
+    username String
+    role    String
+    email  String
+    password String
+    requests Request[]
+    approvals Approval[]
+}
+
+model Supir {
+    id      Int      @id @default(autoincrement())
+    name String
+    status String
+    requests Request[]
+
+}
+
+model Transportation {
+    id         Int       @id @default(autoincrement())
+    type     String
+    merk      String
+    status     String
+    fuelConsumptions FuelConsumption[]
+    requests Request[]
+    
+    serviceDate DateTime
+   
+}
+
+model Request {
+    id        Int       @id @default(autoincrement())
+    createdById Int
+    createdAt DateTime  @default(now())
+    date     DateTime
+    status     String
+    supirId Int
+    transportationId Int
+    approvals Approval[]
+
+    user     User      @relation(fields: [createdById], references: [id])
+    supir Supir @relation(fields: [supirId], references: [id])
+    transportation Transportation @relation(fields: [transportationId], references: [id])
+}
+
+model Approval {
+    id       Int       @id @default(autoincrement())
+    requestId Int
+    userId Int
+    approvalDate DateTime @default(now())
+    status     String
+
+    request Request @relation(fields: [requestId], references: [id])
+    user User @relation(fields: [userId], references: [id])
+}
+
+model FuelConsumption {
+    id       Int       @id @default(autoincrement())
+    transportationId Int
+    date DateTime
+    liter Int
+    price Int
+    total Int
+
+    transportation Transportation @relation(fields: [transportationId], references: [id])
+}
+

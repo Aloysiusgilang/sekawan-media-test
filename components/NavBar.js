@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
+
 const userNavigation = [
   { name: "Your Profile", href: "#" },
   { name: "Sign out", href: "#" },
@@ -12,6 +13,8 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 const NavBar = ({ navigation, user }) => {
+
+
   return (
     <div>
       <Disclosure as="nav" className="bg-gray-800">

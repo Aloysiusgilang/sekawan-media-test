@@ -30,21 +30,24 @@ const chartdata = [
 ];
 
 const dataFormatter = (number) =>
-  `${Intl.NumberFormat("us").format(number).toString()}%`;
+  `${Intl.NumberFormat("us").format(number).toString()}`;
 
-const HistoryChart = () => (
-  <Card>
-    <Title>Export/Import Growth Rates (1970 to 2021)</Title>
-    <LineChart
-      className="mt-6"
-      data={chartdata}
-      index="year"
-      categories={["Export Growth Rate", "Import Growth Rate"]}
-      colors={["emerald", "gray"]}
-      valueFormatter={dataFormatter}
-      yAxisWidth={40}
-    />
-  </Card>
+const HistoryChart = ({ data }) => (
+  console.log(data),
+  (
+    <Card>
+      <Title>Fuel Consumption Trend</Title>
+      <LineChart
+        className="mt-6"
+        data={data}
+        index="date"
+        categories={["liter"]}
+        colors={["emerald", "gray"]}
+        valueFormatter={dataFormatter}
+        yAxisWidth={40}
+      />
+    </Card>
+  )
 );
 
 export default HistoryChart;

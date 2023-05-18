@@ -28,20 +28,42 @@ const cities = [
 ];
 
 const valueFormatter = (number) =>
-  `$ ${Intl.NumberFormat("us").format(number).toString()}`;
+  ` ${Intl.NumberFormat("us").format(number).toString()}`;
 
-const StatusChart = () => (
-  <Card className="max-w-lg">
-    <Title>Sales</Title>
-    <DonutChart
-      className="mt-6"
-      data={cities}
-      category="sales"
-      index="name"
-      valueFormatter={valueFormatter}
-      colors={["slate", "violet", "indigo", "rose", "cyan", "amber"]}
-    />
-  </Card>
-);
+const convertData = (requestData) => {
+  const result = requestData.reduce((acc, item) => {
+    const status = item.status.toLowerCase();
+    const existingItem = acc.find((entry) => entry.status === status);
+
+    if (existingItem) {
+      existingItem.count++;
+    } else {
+      acc.push({ status, count: 1 });
+    }
+
+    return acc;
+  }, []);
+
+  return result;
+};
+
+const StatusChart = ({ requestData }) => {
+  const convertedData = convertData(requestData);
+  console.log(convertedData);
+
+  return (
+    <Card className="max-w-lg mb-8">
+      <Title>Sales</Title>
+      <DonutChart
+        className="mt-6"
+        data={convertedData}
+        category="count"
+        index="status"
+        valueFormatter={valueFormatter}
+        colors={["yellow", "green", "rose", "cyan", "amber"]}
+      />
+    </Card>
+  );
+};
 
 export default StatusChart;
